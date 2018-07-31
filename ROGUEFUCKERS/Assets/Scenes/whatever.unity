@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 339621312}
   - component: {fileID: 339621311}
   - component: {fileID: 339621314}
+  - component: {fileID: 339621315}
   - component: {fileID: 339621310}
   m_Layer: 8
   m_Name: Left Hand
@@ -298,7 +299,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.8, y: 1.1630001, z: 0.594}
+  m_ConnectedAnchor: {x: -1, y: 1.1630001, z: 0.594}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -318,22 +319,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -50.127136
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 54.6298
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 3
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 48.91684
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -431,7 +432,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 339621309}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8, y: -0.6269999, z: 0.594}
+  m_LocalPosition: {x: -1, y: -0.6269999, z: 0.594}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 1527815755}
@@ -452,6 +453,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &339621315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 339621309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd193b40d7017854d90562d443ad3046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handNum: 0
+  cameraTransform: {fileID: 1527815755}
+  held: {fileID: 0}
+  hand: {fileID: 339621309}
+  handPosition: {x: 0, y: 0, z: 0}
+  objectSpeed: 500
+  throwForce: 10000
+  playerCollider: {fileID: 1086093713}
+  otherHand: {fileID: 1548140053}
 --- !u!1 &507106562
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,7 +722,6 @@ GameObject:
   - component: {fileID: 1053690874}
   - component: {fileID: 1053690873}
   - component: {fileID: 1053690872}
-  - component: {fileID: 1053690871}
   - component: {fileID: 1053690870}
   - component: {fileID: 1053690878}
   m_Layer: 8
@@ -725,30 +745,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   maxSpeed: 0.2
+  jumpForce: 20000
   playerInput: {fileID: 1053690878}
   playerBody: {fileID: 1053690873}
---- !u!114 &1053690871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114977247897021304, guid: bf6788977aa7a5a49899edf2cb2149b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1053690869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd193b40d7017854d90562d443ad3046, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 1527815755}
-  heldRight: {fileID: 0}
-  heldLeft: {fileID: 0}
-  leftHand: {fileID: 339621309}
-  leftHandPosition: {x: 0, y: 0, z: 0}
-  rightHand: {fileID: 1548140047}
-  rightHandPosition: {x: 0, y: 0, z: 0}
-  objectSpeed: 400
-  swordForce: 5
-  throwForce: 10000
   playerCollider: {fileID: 1086093713}
 --- !u!114 &1053690872
 MonoBehaviour:
@@ -1201,6 +1200,7 @@ GameObject:
   - component: {fileID: 1548140050}
   - component: {fileID: 1548140049}
   - component: {fileID: 1548140052}
+  - component: {fileID: 1548140053}
   - component: {fileID: 1548140048}
   m_Layer: 8
   m_Name: Right Hand
@@ -1219,7 +1219,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.8, y: 1.163, z: 0.594}
+  m_ConnectedAnchor: {x: 1, y: 1.163, z: 0.594}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -1239,22 +1239,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -44.043785
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 46.31093
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 3
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 32.45302
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -1352,7 +1352,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1548140047}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8, y: -0.627, z: 0.594}
+  m_LocalPosition: {x: 1, y: -0.627, z: 0.594}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 1527815755}
@@ -1373,6 +1373,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1548140053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1548140047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd193b40d7017854d90562d443ad3046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handNum: 1
+  cameraTransform: {fileID: 1527815755}
+  held: {fileID: 0}
+  hand: {fileID: 1548140047}
+  handPosition: {x: 0, y: 0, z: 0}
+  objectSpeed: 500
+  throwForce: 10000
+  playerCollider: {fileID: 1086093713}
+  otherHand: {fileID: 339621315}
 --- !u!1 &1591147554
 GameObject:
   m_ObjectHideFlags: 0

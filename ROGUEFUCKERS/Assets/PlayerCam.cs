@@ -37,7 +37,6 @@ public class PlayerCam : MonoBehaviour
     private bool m_cursorIsLocked = true;
 
     // These 2 classes are heavily intermingled. Reduce coupling if there is a chance.
-    private PlayerInteract playerInteract;
 	private PlayerMove playerMove;
 
 	// For lerping:
@@ -61,7 +60,6 @@ public class PlayerCam : MonoBehaviour
         m_CameraTargetRot = Camera.main.transform.rotation;
         smooth = false;
         cameraState = CAMERA_STATE.FREE_CAM;
-		playerInteract = gameObject.GetComponent<PlayerInteract> ();
 		playerMove = gameObject.GetComponent<PlayerMove> ();
 		inputState = CURRENT_INPUT.NONE;
 		deltaX = 0f;

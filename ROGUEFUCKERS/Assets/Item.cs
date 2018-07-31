@@ -10,10 +10,15 @@ public class Item : MonoBehaviour
 	private bool right = false;
 	private string dominant = "undefined";
 	private string type = "undefined";
+	private float weightDamage = 0;
+	private float attackDamage = 0;
 
 	void Start ()
 	{
-
+		Rigidbody[] rList = GetComponentsInChildren<Rigidbody>();
+		if (rList.Length > 0)
+			for (int i = 0; i < rList.Length; i++)
+				weightDamage += rList[i].mass / 10;
 	}
 	
 	void Update ()
@@ -33,6 +38,7 @@ public class Item : MonoBehaviour
 		character = null;
 		hand = null;
 		dominant = "undefined";
+		attackDamage = 0;
 	}
 
 	public bool getActive()
@@ -78,5 +84,27 @@ public class Item : MonoBehaviour
 	public string getType()
 	{
 		return type;
+	}
+
+	public float getDamage()
+	{
+		if (attackDamage > 0)
+			return attackDamage;
+		return weightDamage;
+	}
+
+	public void setAttackDamage(float d)
+	{
+		attackDamage = d;
+	}
+
+	public void multWeight(float m)
+	{
+		//edit weights of rigidbodies here
+		weightDamage = 0;
+		Rigidbody[] rList = GetComponentsInChildren<Rigidbody>();
+		if (rList.Length > 0)
+			for (int i = 0; i < rList.Length; i++)
+				weightDamage += rList[i].mass / 10;
 	}
 }

@@ -9,10 +9,13 @@ public class PlayerMove : MonoBehaviour
     private float zMove;
     public float moveSpeed = 3f;
     public float maxSpeed = .3f;
+	public float jumpForce = 100f;
 	public GlobalInput playerInput;
 	public Rigidbody playerBody;
+	public Collider playerCollider;
 	private float maxSpeedOriginal;		// CHANGE TO SPRINT MODDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 	private bool canMove;
+	private bool onGround;
 
 	//public AudioSource walk;
 
@@ -92,6 +95,14 @@ public class PlayerMove : MonoBehaviour
         {
             zMove = Mathf.Lerp(zMove, 0f, .9f);
         }
+
+		if (Input.GetButtonDown("Jump"))	//change to manual jumping outside of physics system
+		{
+			if (onGround)
+			{
+				playerBody.AddForce(new Vector3(0, jumpForce, 0));
+			}
+		}
     }
 
     void FixedUpdate()
@@ -99,6 +110,15 @@ public class PlayerMove : MonoBehaviour
         gameObject.transform.Translate(xMove, 0, zMove);
 		Vector3 slow = Vector3.Lerp(playerBody.velocity, Vector3.zero, .5f);
 		playerBody.velocity = new Vector3(slow.x, playerBody.velocity.y, slow.z);
+
+		if (playerCollider.transform.position.y < 1.01f)    //change to raycast or box collider on ground later on
+		{
+			onGround = true;
+		}
+		else
+		{
+			onGround = false;
+		}
 	}
 
 	public void lockMovement() {

@@ -17,6 +17,7 @@ public class Sword : MonoBehaviour
 	private float cutTime = .6f;
 	private float stabTime = .4f;
 	private float attackTime = 0f;
+	private ConfigurableJoint handJoint = null;
 
 	void Start ()
 	{
@@ -33,6 +34,11 @@ public class Sword : MonoBehaviour
 			if (active)
 			{
 				hand = itemGeneric.getHand();
+				//hand.transform.rotation = swordBody.rotation;
+				handJoint = hand.GetComponent<ConfigurableJoint>();
+				/*handJoint.angularXMotion = ConfigurableJointMotion.Locked;
+				handJoint.angularYMotion = ConfigurableJointMotion.Locked;
+				handJoint.angularZMotion = ConfigurableJointMotion.Locked;*/
 				handPosition = hand.transform.localPosition;
 				cameraTransform = hand.GetComponentInParent<Camera>().transform;
 				dominant = itemGeneric.getDominant();
@@ -44,6 +50,7 @@ public class Sword : MonoBehaviour
 			if (!active)
 			{
 				hand = null;
+				handJoint = null;
 				dominant = "undefined";
 				leftAttack = false;
 				rightAttack = false;
@@ -64,30 +71,50 @@ public class Sword : MonoBehaviour
 		{
 			if (leftAttack)
 			{
+				handJoint.angularXMotion = ConfigurableJointMotion.Free;
+				handJoint.angularYMotion = ConfigurableJointMotion.Free;
+				handJoint.angularZMotion = ConfigurableJointMotion.Free;
 				if (dominant == "Left")
 				{   //swing
 					print("LEFT SWING");
+					itemGeneric.setAttackDamage(5);
 				}
 				else
 				{   //stab
 					print("LEFT STAB");
+					itemGeneric.setAttackDamage(3);
 				}
 			}
 			else if (rightAttack)
 			{
+				handJoint.angularXMotion = ConfigurableJointMotion.Free;
+				handJoint.angularYMotion = ConfigurableJointMotion.Free;
+				handJoint.angularZMotion = ConfigurableJointMotion.Free;
 				if (dominant == "Right")
 				{   //swing
 					print("RIGHT SWING");
+					itemGeneric.setAttackDamage(5);
 				}
 				else
 				{   //stab
 					print("RIGHT STAB");
+					itemGeneric.setAttackDamage(3);
 				}
 			}
 			else
 			{
+				itemGeneric.setAttackDamage(0);
 				hand.transform.localPosition = Vector3.Lerp(hand.transform.localPosition, handPosition, .5f);
-				swordBody.rotation = Quaternion.Slerp(swordBody.rotation, cameraTransform.rotation, .45f);
+				swordBody.rotation = Quaternion.Slerp(swordBody.rotation, cameraTransform.rotation, 20 / Quaternion.Angle(swordBody.rotation, cameraTransform.rotation));
+				if (Mathf.Abs(swordBody.rotation.eulerAngles.x - cameraTransform.rotation.eulerAngles.x) < .1f &&
+					Mathf.Abs(swordBody.rotation.eulerAngles.y - cameraTransform.rotation.eulerAngles.y) < .1f &&
+					Mathf.Abs(swordBody.rotation.eulerAngles.z - cameraTransform.rotation.eulerAngles.z) < .1f)
+				{
+					handJoint.angularXMotion = ConfigurableJointMotion.Locked;
+					handJoint.angularYMotion = ConfigurableJointMotion.Locked;
+					handJoint.angularZMotion = ConfigurableJointMotion.Locked;
+				}
+				//hand.transform.rotation = Quaternion.Slerp(hand.transform.rotation, cameraTransform.rotation, 20 / Quaternion.Angle(hand.transform.rotation, cameraTransform.rotation));
 			}
 		}
 	}
