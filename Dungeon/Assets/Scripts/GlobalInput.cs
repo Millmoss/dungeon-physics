@@ -19,13 +19,13 @@ public class GlobalInput : MonoBehaviour
 		else
 		{
 			if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-				tempx = 1;
+				tempx += 1;
 			if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-				tempx = -1;
+				tempx += -1;
 			if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-				tempz = 1;
+				tempz += 1;
 			if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-				tempz = -1;
+				tempz += -1;
 		}
 		Vector3 tempv = Vector3.ClampMagnitude(new Vector3(tempx, 0, tempz), 1);
 		if (Mathf.Abs(tempv.x) >= .25f)
@@ -45,13 +45,13 @@ public class GlobalInput : MonoBehaviour
 		else
 		{
 			if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-				tempx = 1;
+				tempx += 1;
 			if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-				tempx = -1;
+				tempx += -1;
 			if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-				tempz = 1;
+				tempz += 1;
 			if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-				tempz = -1;
+				tempz += -1;
 		}
 		Vector3 tempv = Vector3.ClampMagnitude(new Vector3(tempx, 0, tempz), 1);
 		if (Mathf.Abs(tempv.z) >= .25f)

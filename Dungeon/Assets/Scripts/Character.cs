@@ -5,23 +5,25 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
 	public float acceleration = 3f;
-	public float moveSpeed = .8f;
-	public float sprintPower = 1.7f;
+	public float moveSpeed = 4.5f;
+	public float sprintSpeed = 8.5f;
 	public float jumpForce = 100f;
 	public float gravityForce = 10f;
 	public float mass = 70f;
 	public float height = 1.7f;					//effective height of character for gameplay purposes
-	public float reachFromBottom = 1f;			//reach from bottom of character, meant for use with ledge grabbing/floor collisions
+	public float reachFromBottom = 1f;          //reach from bottom of character, meant for use with ledge grabbing/floor collisions
+	public float stepHeight = .5f;
 	protected Vector3 velocity = Vector3.zero;
 	protected Rigidbody characterBody;
 	protected Collider characterCollider;
 	protected bool canMove;
 	protected bool onGround;
 	protected List<Collider> collisionList;
+	protected GroundCollision groundCollision;
 
 	void Start ()
 	{
-		collisionList = new List<Collider>();
+
 	}
 	
 	void Update ()
