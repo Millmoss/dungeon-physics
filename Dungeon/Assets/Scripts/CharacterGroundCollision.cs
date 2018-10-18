@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundCollision : MonoBehaviour
+public class CharacterGroundCollision : MonoBehaviour
 {
 	private List<Collider> collisionList;
 	private float selfExtent;
@@ -13,11 +13,6 @@ public class GroundCollision : MonoBehaviour
 	{
 		collisionList = new List<Collider>();
 		selfExtent = gameObject.GetComponent<SphereCollider>().bounds.extents.y;
-	}
-	
-	void Update ()
-	{
-
 	}
 
 	public bool onGround()
@@ -40,7 +35,7 @@ public class GroundCollision : MonoBehaviour
 					groundIndex = i;
 				}
 				else
-				{
+				{//add something to sift out small objects
 					Collider g = collisionList[groundIndex];
 					float gExtent = g.transform.position.y + g.bounds.extents.y;
 					if (gExtent < cExtent)
@@ -67,24 +62,15 @@ public class GroundCollision : MonoBehaviour
 		return yExtent;
 	}
 
-	public bool stable()
-	{
-		if (collisionList.Count == 0 || groundCollider == null)
-			return false;
-
-		float yExtent = groundCollider.transform.position.y + groundCollider.bounds.extents.y;
-		return Mathf.Abs(yExtent - transform.position.y) < .1f;
-	}
-
 	public void OnTriggerEnter(Collider c)
 	{
-		if (c.gameObject.layer == 10 || c.gameObject.layer == 12)
+		if (c.gameObject.layer == 10 || c.gameObject.layer == 11 || c.gameObject.layer == 12)
 			collisionList.Add(c);
 	}
 
 	public void OnTriggerExit(Collider c)
 	{
-		if (c.gameObject.layer == 10 || c.gameObject.layer == 12)
+		if (c.gameObject.layer == 10 || c.gameObject.layer == 11 || c.gameObject.layer == 12)
 			collisionList.Remove(c);
 	}
 }

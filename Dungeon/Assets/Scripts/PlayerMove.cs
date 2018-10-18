@@ -14,12 +14,13 @@ public class PlayerMove : Character
 
     void Start()
 	{
-		collisionList = new List<Collider>();
 		canMove = true;
 		playerInput = gameObject.GetComponent<GlobalInput>();
 		characterBody = gameObject.GetComponent<Rigidbody>();
 		characterCollider = gameObject.GetComponent<CapsuleCollider>();
-		groundCollision = gameObject.GetComponentInChildren<GroundCollision>();
+		groundCollision = gameObject.GetComponentInChildren<CharacterGroundCollision>();
+		staticCollision = gameObject.GetComponentInChildren<CharacterStaticCollision>();
+		nonstaticCollision = gameObject.GetComponentInChildren<CharacterNonstaticCollision>();
 	}
 
     void Update()
@@ -32,9 +33,7 @@ public class PlayerMove : Character
 
 		gravity();
 
-		collisionCase();
-
-		groundCollisionHandler();
+		collisions();
 
 		gameObject.transform.Translate(velocity * Time.deltaTime);
 	}
@@ -101,30 +100,26 @@ public class PlayerMove : Character
 		}
 	}
 
-	private void collisionCase()
+	private void collisions()
 	{
-		if (collisionList.Count == 0)
-			return;
+		staticCollisionsHandler();
 
-		//determines where the player is in reference to all colliders
-		for (int i = 0; i < collisionList.Count; i++)
-		{
-			Collider c = collisionList[i];
-			float yExtent = c.bounds.extents.y;
-			float yEffective = transform.position.y - characterCollider.bounds.extents.y + reachFromBottom;
-			if (yEffective - c.transform.position.y <= yExtent)
-			{
+		nonstaticCollisionsHandler();
 
-			}
-		}
+		groundCollisionsHandler();
 	}
 
-	private void staticCollision(Collider c)
+	private void staticCollisionsHandler()
 	{
-
+		//staticCollision.
 	}
 
-	private void groundCollisionHandler()
+	private void nonstaticCollisionsHandler()
+	{
+		//can't implement until interactables or enemy characters have been implemented
+	}
+
+	private void groundCollisionsHandler()
 	{
 		onGround = groundCollision.onGround();
 

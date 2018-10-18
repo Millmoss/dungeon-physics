@@ -11,15 +11,15 @@ public class Character : MonoBehaviour
 	public float gravityForce = 10f;
 	public float mass = 70f;
 	public float height = 1.7f;					//effective height of character for gameplay purposes
-	public float reachFromBottom = 1f;          //reach from bottom of character, meant for use with ledge grabbing/floor collisions
-	public float stepHeight = .5f;
+	public float stepHeight = .3f;
 	protected Vector3 velocity = Vector3.zero;
 	protected Rigidbody characterBody;
 	protected Collider characterCollider;
 	protected bool canMove;
 	protected bool onGround;
-	protected List<Collider> collisionList;
-	protected GroundCollision groundCollision;
+	protected CharacterGroundCollision groundCollision;
+	protected CharacterStaticCollision staticCollision;
+	protected CharacterNonstaticCollision nonstaticCollision;
 
 	void Start ()
 	{
@@ -33,10 +33,10 @@ public class Character : MonoBehaviour
 
 	protected void sanityCheck()			//must be called upon alteration of usually static values
 	{
-		if (reachFromBottom < 0)
-			reachFromBottom = 0;
-		else if (reachFromBottom > height)
-			reachFromBottom = height;
+		if (stepHeight < 0)
+			stepHeight = 0;
+		else if (stepHeight > height)
+			stepHeight = height;
 
 		if (mass < 0)
 			mass = 0;
