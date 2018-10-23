@@ -4,22 +4,41 @@ using UnityEngine;
 
 public class CharacterStaticCollision : MonoBehaviour
 {
+	private CapsuleCollider selfCollider;
 	private List<Collider> collisionList;
-	private float selfExtent;
+	private float selfExtentRadial;
+	private float selfExtentY;
 
 	void Start()
 	{
+		selfCollider = gameObject.GetComponent<CapsuleCollider>();
 		collisionList = new List<Collider>();
-		selfExtent = gameObject.GetComponent<CapsuleCollider>().radius;
+		selfExtentRadial = selfCollider.radius;
+		selfExtentY = selfCollider.bounds.extents.y - selfExtentRadial;
 	}
 
 	public bool inStatic()
 	{
-		return false;
+		if (collisionList.Count == 0)
+			return false;
+
+		for (int i = 0; i < collisionList.Count; i++)
+		{
+			Collider c = collisionList[i];
+
+			if (Mathf.Abs(transform.position.y - c.transform.position.y) > selfExtentY + c.bounds.extents.y)
+				return false;
+			else
+				return true;
+		}
+
+		return true;
 	}
 
 	public Vector3 directionFromStatic(Vector3 velocity)
 	{
+		
+
 		return Vector3.zero;
 	}
 
