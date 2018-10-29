@@ -67,8 +67,7 @@ public class PlayerCam : MonoBehaviour
         Application.targetFrameRate = 90;
 	}
 
-	void Update() {
-//		Debug.Log ("Down:" +Input.GetMouseButton(0));
+	void FixedUpdate() {
 		if (Input.GetMouseButtonDown(0)) {
 			inputState = CURRENT_INPUT.INTERACT_DOWN;
 		} else if (Input.GetMouseButton(0)) {
@@ -104,7 +103,7 @@ public class PlayerCam : MonoBehaviour
 		inputState = CURRENT_INPUT.NONE;
 	}
 
-    private void SetCursorLock()
+	private void SetCursorLock()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

@@ -13,6 +13,11 @@ public class CharacterNonstaticCollision : MonoBehaviour
 		selfExtent = gameObject.GetComponent<CapsuleCollider>().radius;
 	}
 
+	public void rigidbodyCollisions(Vector3 velocity, float mass)
+	{
+
+	}
+
 	public void OnTriggerEnter(Collider c)
 	{
 		if (c.gameObject.layer == 11 || c.gameObject.layer == 12)

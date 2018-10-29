@@ -31,6 +31,11 @@ public class Character : MonoBehaviour
 		
 	}
 
+	protected void stabilize()
+	{
+		characterBody.velocity = Vector3.zero;
+	}
+
 	protected void sanityCheck()			//must be called upon alteration of usually static values
 	{
 		if (stepHeight < 0)

@@ -17,29 +17,39 @@ public class CharacterStaticCollision : MonoBehaviour
 		selfExtentY = selfCollider.bounds.extents.y - selfExtentRadial;
 	}
 
-	public bool inStatic()
+	public Vector3 positionOnStatic(Vector3 velocity)
 	{
 		if (collisionList.Count == 0)
-			return false;
+			return transform.position;
+
+		Vector3 positionAverage = Vector3.zero;
+		Vector3 directionAverage = Vector3.zero;
+		int validCollisions = 0;
 
 		for (int i = 0; i < collisionList.Count; i++)
 		{
 			Collider c = collisionList[i];
 
 			if (Mathf.Abs(transform.position.y - c.transform.position.y) > selfExtentY + c.bounds.extents.y)
-				return false;
-			else
-				return true;
+				continue;
+
+			validCollisions++;
+
+			Vector3 closestPoint = c.ClosestPointOnBounds(transform.position);
+			Vector3 directionFromPoint = transform.position - closestPoint;
+			directionFromPoint.y = 0;
+
+			directionAverage += directionFromPoint.normalized * selfExtentRadial;
+			positionAverage += closestPoint;
 		}
 
-		return true;
-	}
+		if (validCollisions == 0)
+			return transform.position;
 
-	public Vector3 directionFromStatic(Vector3 velocity)
-	{
-		
+		positionAverage /= validCollisions;
+		directionAverage /= validCollisions;
 
-		return Vector3.zero;
+		return positionAverage + directionAverage;
 	}
 
 	void OnTriggerEnter(Collider c)

@@ -21,11 +21,18 @@ public class PlayerMove : Character
 		groundCollision = gameObject.GetComponentInChildren<CharacterGroundCollision>();
 		staticCollision = gameObject.GetComponentInChildren<CharacterStaticCollision>();
 		nonstaticCollision = gameObject.GetComponentInChildren<CharacterNonstaticCollision>();
+
+		characterBody.freezeRotation = true;
 	}
 
-    void Update()
+	void Update()
 	{
 		inputs();
+	}
+
+	void FixedUpdate()
+	{
+		stabilize();
 
 		move();
 
@@ -33,17 +40,26 @@ public class PlayerMove : Character
 
 		gravity();
 
-		collisions();
-
 		gameObject.transform.Translate(velocity * Time.deltaTime);
+
+		groundCollisionsHandler();
+	}
+
+	void LateUpdate()
+	{
+		stabilize();
 	}
 
 	private void inputs()
 	{
 		xInput = playerInput.getXTiltMove() * acceleration;
 		zInput = playerInput.getZTiltMove() * acceleration;
-		jumpInput = Input.GetKeyDown(KeyCode.Space);
 		sprintInput = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+		
+		if (!onGround)
+			jumpInput = false;
+		else if (Input.GetKeyDown(KeyCode.Space) && onGround)
+			jumpInput = true;
 	}
 
 	private void move()
@@ -98,25 +114,6 @@ public class PlayerMove : Character
 		{
 			velocity = Vector3.ClampMagnitude(new Vector3(velocity.x, 0, velocity.z), moveSpeed) + new Vector3(0, velocity.y, 0);
 		}
-	}
-
-	private void collisions()
-	{
-		staticCollisionsHandler();
-
-		nonstaticCollisionsHandler();
-
-		groundCollisionsHandler();
-	}
-
-	private void staticCollisionsHandler()
-	{
-		//staticCollision.
-	}
-
-	private void nonstaticCollisionsHandler()
-	{
-		//can't implement until interactables or enemy characters have been implemented
 	}
 
 	private void groundCollisionsHandler()
