@@ -28,8 +28,7 @@ public class NonStatic : MonoBehaviour
 		selfCollider = gameObject.GetComponent<Collider>();
 		selfColliderType = selfCollider.GetType();
 
-		extent = Mathf.Sqrt(Mathf.Max(selfCollider.bounds.extents.x, selfCollider.bounds.extents.y, selfCollider.bounds.extents.z)
-			+ Mathf.Max(selfCollider.bounds.extents.x, selfCollider.bounds.extents.y, selfCollider.bounds.extents.z));
+		extent = Mathf.Max(selfCollider.bounds.extents.x, selfCollider.bounds.extents.y, selfCollider.bounds.extents.z);
 
 		collisionMask = (LayerMask)111 << 9;
 	}
@@ -96,7 +95,7 @@ public class NonStatic : MonoBehaviour
 				}
 			}
 
-			if (Vector3.Angle(groundingNormal, Vector3.up) < 1 && groundingNormal != Vector3.zero)
+			if (Vector3.Angle(groundingNormal, Vector3.up) < 1 && groundingNormal != Vector3.zero)		//account for slopes!!!
 			{
 				force += gravityForce * mass * Vector3.up;
 				if (velocity.y < .05f)
@@ -113,25 +112,33 @@ public class NonStatic : MonoBehaviour
 		}
 		if (selfColliderType == typeof(BoxCollider))
 		{
-			float percentOnGround = 0;
+			Vector3 groundNormal = Vector3.zero;
+			int groundFriction = 0;
 
 			for (int i = 0; i < collisionList.Count; i++)
 			{
 				Collider c = collisionList[i];
 
-				RaycastHit hit = new RaycastHit();
-				bool ray = Physics.Raycast(transform.position, Vector3.down, extent, 
-
-				//get force from closest point against closest point to find rotation force
-				//if close enough to a grounding force, treat as though it is the ground
-
-				if (c.gameObject.layer == 11 || c.gameObject.layer == 12)
+				if (c.gameObject.layer == 10 || (c.gameObject.layer == 12 && c.gameObject.GetComponent<NonStatic>().velocity == Vector3.zero))
 				{
-					//send force to object
+
+					Vector3 p = c.ClosestPointOnBounds(transform.position);
+					if (transform.position.y > p.y)     //account for walls better!!!
+						groundNormal += transform.position - p;
+
+					//use distance to figure out the friction
+					
+				}
+				else if (c.gameObject.layer == 11 || c.gameObject.layer == 12)
+				{
+					//forces are being applied and such, send forces and expect forces later
 				}
 			}
 
-			//use percent on ground to figure out friction, whether gravity should even apply, and so on
+			groundNormal = groundNormal.normalized;
+
+			force += gravityForce * mass * groundNormal;	//switch to accounting for normal difference and then apply friction
+			//account for the rotation the normal creates if the object is not already at that rotation
 		}
 	}
 
