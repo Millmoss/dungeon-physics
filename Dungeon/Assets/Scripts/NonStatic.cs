@@ -12,23 +12,20 @@ public class NonStatic : MonoBehaviour
 	[SerializeField] [Range(0f, 1f)] protected float bounce = .1f;
 	[SerializeField] [Range(-1f, 1f)] protected float adhesion = 0f;		//higher than zero to make more adhesive, lower than zero to make preventative of adhesion. Most objects should be zero
 	protected Rigidbody selfBody;
-	protected Collider selfCollider;
-	protected List<Collider> collisionList;
-	protected System.Type selfColliderType;
+	protected NonStaticSphere[] sphereColliders;
+	protected NonStaticBox[] boxColliders;
 	protected Vector3 force = Vector3.zero;
 	protected Vector3 forceReference = Vector3.zero;
 	protected float extent = 0;
 	protected LayerMask collisionMask;
+	protected float groundFrictionCoefficients = 0;		//between 0 and 1
 
 	void Start ()
 	{
-		collisionList = new List<Collider>();
 		selfBody = gameObject.GetComponent<Rigidbody>();
-		selfBody.freezeRotation = true;
-		selfCollider = gameObject.GetComponent<Collider>();
-		selfColliderType = selfCollider.GetType();
 
-		extent = Mathf.Max(selfCollider.bounds.extents.x, selfCollider.bounds.extents.y, selfCollider.bounds.extents.z);
+		sphereColliders = GetComponentsInChildren<NonStaticSphere>();
+		boxColliders = GetComponentsInChildren<NonStaticBox>();
 
 		collisionMask = (LayerMask)111 << 9;
 	}
@@ -46,11 +43,13 @@ public class NonStatic : MonoBehaviour
 
 		force += gravityForce * mass * Vector3.down;
 
-		generalCollisionHandler();
+		handleColliders();
+
+		print(force + ", " + velocity);
 
 		velocityHandler();
 
-		print(velocity);
+		frictionHandler();
 
 		transform.position += velocity * Time.deltaTime;
 
@@ -67,8 +66,24 @@ public class NonStatic : MonoBehaviour
 		selfBody.velocity = Vector3.zero;
 	}
 
+	protected void handleColliders()
+	{
+		if (sphereColliders.Length > 0)
+		{
+			for (int i = 0; i < sphereColliders.Length; i++)
+				sphereColliders[i].collisionsHandler();
+		}
+		if (boxColliders.Length > 0)
+		{
+			//for (int i = 0; i < boxColliders.Length; i++)
+				//boxColliders[i].collisionsHandler();
+		}
+	}
+
 	protected void generalCollisionHandler()
 	{
+		return;
+		/*
 		if (collisionList.Count == 0)
 			return;
 
@@ -78,7 +93,7 @@ public class NonStatic : MonoBehaviour
 
 			for (int i = 0; i < collisionList.Count; i++)
 			{
-				Collider c = collisionList[i];
+				Collider c = collisionList[i].collider;
 
 				Vector3 normal = (transform.position - c.ClosestPointOnBounds(transform.position)).normalized;
 
@@ -110,14 +125,14 @@ public class NonStatic : MonoBehaviour
 
 			//if on ground and upward force greater than gravity is non-existant, gravity should not apply
 		}
+
 		if (selfColliderType == typeof(BoxCollider))
 		{
 			Vector3 groundNormal = Vector3.zero;
-			int groundFriction = 0;
 
 			for (int i = 0; i < collisionList.Count; i++)
 			{
-				Collider c = collisionList[i];
+				Collider c = collisionList[i].collider;
 
 				if (c.gameObject.layer == 10 || (c.gameObject.layer == 12 && c.gameObject.GetComponent<NonStatic>().velocity == Vector3.zero))
 				{
@@ -139,6 +154,15 @@ public class NonStatic : MonoBehaviour
 
 			force += gravityForce * mass * groundNormal;	//switch to accounting for normal difference and then apply friction
 			//account for the rotation the normal creates if the object is not already at that rotation
+		}*/
+	}
+
+	protected void frictionHandler()
+	{
+		//really bad temp code here
+		if (Mathf.Abs(velocity.y) < .05f)
+		{
+			velocity *= 1 - friction * Time.deltaTime * 5;
 		}
 	}
 
@@ -147,20 +171,28 @@ public class NonStatic : MonoBehaviour
 		velocity += (force / mass) * Time.deltaTime;
 	}
 
+	public Vector3 getVelocity()
+	{
+		return velocity;
+	}
+
+	public float getMass()
+	{
+		return mass;
+	}
+
+	public float getBounce()
+	{
+		return bounce;
+	}
+
 	public void addForce(Vector3 f)
 	{
 		force += f;
 	}
 
-	void OnCollisionEnter(Collision c)
+	public void addVelocity(Vector3 v)
 	{
-		if (c.gameObject.layer == 10 || c.gameObject.layer == 11 || c.gameObject.layer == 12)
-			collisionList.Add(c.collider);
-	}
-
-	void OnCollisionExit(Collision c)
-	{
-		if (c.gameObject.layer == 10 || c.gameObject.layer == 11 || c.gameObject.layer == 12)
-			collisionList.Remove(c.collider);
+		velocity += v;
 	}
 }

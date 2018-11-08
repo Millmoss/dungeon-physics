@@ -475,6 +475,72 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &228354796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 228354797}
+  - component: {fileID: 228354799}
+  - component: {fileID: 228354798}
+  - component: {fileID: 228354800}
+  m_Layer: 12
+  m_Name: Sphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &228354797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 228354796}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1527952197}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &228354798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 228354796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8329bde171cb0149a9118aea64055df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &228354799
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 228354796}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &228354800
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 228354796}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &256312559
 GameObject:
   m_ObjectHideFlags: 0
@@ -1695,7 +1761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1114712481
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1757,7 +1823,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1114712480}
   m_LocalRotation: {x: -0, y: -0.045232218, z: -0, w: 0.9989765}
-  m_LocalPosition: {x: 2.4058218, y: 0.62, z: 0.1486516}
+  m_LocalPosition: {x: 2.4058218, y: 0.56, z: 0.1486516}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2071,14 +2137,13 @@ GameObject:
   - component: {fileID: 1462919974}
   - component: {fileID: 1462919973}
   - component: {fileID: 1462919976}
-  - component: {fileID: 1462919975}
   m_Layer: 12
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &1462919973
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2113,20 +2178,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 11.533001, y: 0, z: 11.609}
---- !u!64 &1462919975
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1462919972}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 0}
 --- !u!114 &1462919976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2155,11 +2206,10 @@ GameObject:
   - component: {fileID: 1527952197}
   - component: {fileID: 1527952196}
   - component: {fileID: 1527952195}
-  - component: {fileID: 1527952194}
   - component: {fileID: 1527952193}
   - component: {fileID: 1527952198}
-  m_Layer: 0
-  m_Name: Sphere
+  m_Layer: 12
+  m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2179,22 +2229,10 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   gravityForce: 10
   mass: 5
-  friction: 0.7
+  friction: 0.723
   airResistance: 0.1
-  bounce: 0.246
+  bounce: 0.337
   adhesion: 0
---- !u!135 &1527952194
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1527952192}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1527952195
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2246,7 +2284,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.58, y: 14.93, z: -0.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 228354797}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2284,7 +2323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1607700392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2564,7 +2603,6 @@ GameObject:
   - component: {fileID: 1712814749}
   - component: {fileID: 1712814752}
   - component: {fileID: 1712814751}
-  - component: {fileID: 1712814750}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2585,18 +2623,6 @@ Transform:
   m_Father: {fileID: 1688903284}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1712814750
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1712814748}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1712814751
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2651,7 +2677,7 @@ GameObject:
   - component: {fileID: 1740001322}
   - component: {fileID: 1740001321}
   m_Layer: 12
-  m_Name: Cube
+  m_Name: SwordModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2725,7 +2751,7 @@ GameObject:
   - component: {fileID: 1793798838}
   - component: {fileID: 1793798839}
   m_Layer: 12
-  m_Name: CrossGuardColliders
+  m_Name: CrossGuardCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2738,7 +2764,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1793798837}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.186, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1462919974}
@@ -2755,7 +2781,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.05, y: 0.05, z: 0.45}
-  m_Center: {x: 0, y: -1.1104134, z: 0}
+  m_Center: {x: 0, y: -0.93, z: 0}
 --- !u!1 &1813428958
 GameObject:
   m_ObjectHideFlags: 0

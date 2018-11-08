@@ -42,6 +42,8 @@ public class PlayerMove : Character
 
 		gameObject.transform.Translate(velocity * Time.deltaTime);
 
+		//print(velocity);
+
 		groundCollisionsHandler();
 	}
 
@@ -161,5 +163,29 @@ public class PlayerMove : Character
 	public void unlockMovement()
 	{
 		canMove = true;
+	}
+
+	void OnCollisionEnter(Collision c)
+	{
+		if (c.gameObject.layer == 12)
+		{
+			nonStaticCollision(c.transform.position, c.gameObject.GetComponent<NonStatic>());
+		}
+	}
+
+	void OnCollisionStay(Collision c)
+	{
+		if (c.gameObject.layer == 12)
+		{
+			nonStaticCollision(c.transform.position, c.gameObject.GetComponent<NonStatic>());
+		}
+	}
+
+	void nonStaticCollision(Vector3 p, NonStatic ns)
+	{
+		Vector3 dir = p - transform.position;
+		dir = new Vector3(dir.x, dir.y / 10, dir.z).normalized;
+		Vector3 force = velocity * mass;
+		ns.addForce(Mathf.Abs(Vector3.Dot(force, dir)) * dir);
 	}
 }
